@@ -13,7 +13,7 @@ int main()
                      		/* print the message at the center of the screen */
  mvprintw(LINES - 2, 0, "Press ENTER to continue, ESC to exit\n");
  ch = getch();
- if(ch == CR) {
+ if(ch == 'CR') {
  	/* go to next screen window ... */
  }
  if(ch == 'ESC')	
