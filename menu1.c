@@ -17,7 +17,7 @@ char *choices[] = {
                   };
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
-int main()
+void menu1(void)
 {	ITEM **my_items;
 	int c;				
 	MENU *my_menu;
@@ -25,11 +25,10 @@ int main()
         int n_choices, i;
 	const char *ch = NULL;
 	/* Initialize curses */
-	initscr();
+	/*initscr();
 	start_color();
         cbreak();
-        noecho();
-	keypad(stdscr, TRUE);
+        noecho();*/
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 
 	/* Create items */
@@ -42,7 +41,7 @@ int main()
 	my_menu = new_menu((ITEM **)my_items);
 
 	/* Create the window to be associated with the menu */
-        my_menu_win = newwin(10, 40, 4, 4);
+        my_menu_win = newwin(10, 45, 4, 4);
         keypad(my_menu_win, TRUE);
      
 	/* Set main window and sub window */
@@ -54,7 +53,7 @@ int main()
 
 	/* Print a border around the main window and print a title */
         box(my_menu_win, 0, 0);
-	print_in_middle(my_menu_win, 1, 0, 40, "Sorting Demos", COLOR_PAIR(1));
+	print_in_middle(my_menu_win, 1, 0, 40, "Select one:", COLOR_PAIR(1));
 	mvwaddch(my_menu_win, 2, 0, ACS_LTEE);
 	mvwhline(my_menu_win, 2, 1, ACS_HLINE, 38);
 	mvwaddch(my_menu_win, 2, 39, ACS_RTEE);
@@ -83,8 +82,8 @@ int main()
         free_menu(my_menu);
         for(i = 0; i < n_choices; ++i)
                 free_item(my_items[i]);
-	endwin();
-	return 0;
+	//endwin();
+	//return 0;
 }
 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
