@@ -17,19 +17,15 @@ char *choices[] = {
                   };
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 
-void menu1(void)
+void menu1(FILE *f1, char *a)
 {	ITEM **my_items;
-	int c;				
+	int c;
 	MENU *my_menu;
         WINDOW *my_menu_win;
         int n_choices, i;
 	const char *ch = NULL;
-	/* Initialize curses */
-	/*initscr();
-	start_color();
-        cbreak();
-        noecho();*/
-	init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	fscanf(f1, "%[^\n]", a);
+	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 
 	/* Create items */
         n_choices = ARRAY_SIZE(choices);
@@ -39,26 +35,27 @@ void menu1(void)
 
 	/* Create menu */
 	my_menu = new_menu((ITEM **)my_items);
-
 	/* Create the window to be associated with the menu */
-        my_menu_win = newwin(10, 45, 4, 4);
+        my_menu_win = newwin(10, 40, 4, 4); /* 4 , 4 */
         keypad(my_menu_win, TRUE);
-     
-	/* Set main window and sub window */
+        /* Set main window and sub window */
         set_menu_win(my_menu, my_menu_win);
         set_menu_sub(my_menu, derwin(my_menu_win, 6, 38, 3, 1));
 
 	/* Set menu mark to the string " > " */
         set_menu_mark(my_menu, " > ");
+	
 
 	/* Print a border around the main window and print a title */
         box(my_menu_win, 0, 0);
-	print_in_middle(my_menu_win, 1, 0, 40, "Select one:", COLOR_PAIR(1));
+	print_in_middle(my_menu_win, 1, 0, 40, "SELECT ONE", COLOR_PAIR(1));
 	mvwaddch(my_menu_win, 2, 0, ACS_LTEE);
 	mvwhline(my_menu_win, 2, 1, ACS_HLINE, 38);
 	mvwaddch(my_menu_win, 2, 39, ACS_RTEE);
-	mvprintw(LINES - 2, 0, "Use arrow keys to move and <ENTER> to select");
-	mvprintw(LINES - 1, 0, "Press F2 to exit");
+	mvprintw(LINES - 2, 0, "%s\n", a);
+	fgetc(f1);
+	fscanf(f1, "%[^\n]", a);
+	mvprintw(LINES - 1, 0, "%s\n", a);
 	refresh();
         
 	/* Post the menu */
