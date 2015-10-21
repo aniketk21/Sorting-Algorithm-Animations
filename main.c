@@ -3,13 +3,15 @@
 #include <stdlib.h>
 #include <ncurses.h> 
 #include <errno.h>
+#define NL '\n'
 
-void menu1(FILE *f1, char *a);
-int main(int argc, char *argv[]) {
+int menu(FILE *f1, char *a);
+
+int main() {
 	char mesg[100];
 	char ch;
 	int row,col;
-	FILE *f1 = fopen(argv[1], "r");
+	FILE *f1 = fopen("files/instr", "r");
 	if(f1 == NULL) {
 		perror("open failed");
 		return errno;
@@ -30,20 +32,16 @@ int main(int argc, char *argv[]) {
 	mvprintw(LINES - 2, 0, "%s\n",mesg);
 	attroff(A_STANDOUT);
 	ch = getch();
-	if(ch == 'y') {
+	if(ch == NL) {
  	/* go to next screen window */
 		clear();
 		fgetc(f1);
-		/*fscanf(f1, "%[^\n]", mesg);
-		mvprintw(row / 4, (col - strlen(mesg)) / 2, "%s", mesg);*/
-		menu1(f1, mesg);
+		menu(f1, mesg);
 		refresh();
 		getch();
 	}
-	else if(ch == 'n') {
+	else if(ch == 'n' || ch == 'N') 
 		clear();
-		exit(0);
-	}	
 	refresh();
 	endwin();
 	fclose(f1);

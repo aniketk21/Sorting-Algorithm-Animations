@@ -1,0 +1,15 @@
+1) Bubble Sort, sometimes referred to as sinking sort
+, is a simple sorting algorithm that repeatedly steps 
+through the list to be sorted, compares each pair of 
+adjacent items and swaps them if they are in the 
+wrong order. 
+
+2) Quicksort, also known as partition-exchange sort,
+is an efficient sorting algorithm, serving as a 
+systematic method for placing the elements of an 
+array in order. It was developed by Tony Hoare in 
+1959. 
+
+3) Selection sort is an in-place comparison sort.
+The min or max element is selected from the 
+unsorted elements. 
