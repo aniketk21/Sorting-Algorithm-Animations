@@ -67,7 +67,7 @@ int menu(FILE *f1, char *a)
 	mvwaddch(menu_win, 2, 39, ACS_RTEE);
 	
 	box(info_win, 0, 0);
-	print_in_middle(info_win, 1, 0, 60, "INFO", COLOR_PAIR(1));
+	print_in_middle(info_win, 1, 0, 60, "DESCRIPTION", COLOR_PAIR(1));
 	mvwaddch(info_win, 2, 0, ACS_LTEE);
 	mvwhline(info_win, 2, 1, ACS_HLINE, 58);
 	mvwaddch(info_win, 2, 59, ACS_RTEE);
