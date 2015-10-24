@@ -1,4 +1,4 @@
 # Sorting-Algorithms
 # This is a program to demonstrate sorting algorithms.
-# Bubble Sort,Quicksort and Selection Sort will be demonstrated.
-# ncurses.h library is used.
+# I have selected Bubble Sort,Quicksort and Selection Sort.
+# I'm using ncurses.h library for GUI.
