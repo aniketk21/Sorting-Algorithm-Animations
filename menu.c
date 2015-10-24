@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <math.h>
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
 char *choices[] = {
@@ -22,7 +23,7 @@ void info_on_sort(WINDOW *win, FILE *f2);
 
 int menu(FILE *f1, char *a)
 {	ITEM **my_items;
-	int c;
+	int c, y, x;
 	FILE *f2;
 	MENU *menu;
         WINDOW *menu_win, *info_win;
@@ -35,21 +36,25 @@ int menu(FILE *f1, char *a)
 		return errno;
 	}	
 	fscanf(f1, "%[^\n]", a);
+	
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
-
+	
 	/* Create items */
         n_choices = ARRAY_SIZE(choices);
         my_items = (ITEM **)calloc(n_choices, sizeof(ITEM *));
         for(i = 0; i < n_choices; ++i)
 		my_items[i] = new_item(choices[i], ch);
 
+	y = ceil(0.3658 * LINES); /* For placing the menu box at the center */
+	x = ceil(0.3472 * COLS);
+	
 	/* Create menu */
 	menu = new_menu((ITEM **)my_items);
 
 	/* Create the window to be associated with the menu */
-        menu_win = newwin(10, 40, 4, 4);
-	info_win = newwin(20, 60, 4, 60);
-	keypad(info_win, TRUE);
+        menu_win = newwin(10, 40, y, x);
+	//info_win = newwin(20, 60, 4, 60);
+	//keypad(info_win, TRUE);
 	keypad(menu_win, TRUE);
 
         /* Set main window and sub window */
@@ -66,12 +71,12 @@ int menu(FILE *f1, char *a)
 	mvwhline(menu_win, 2, 1, ACS_HLINE, 38);
 	mvwaddch(menu_win, 2, 39, ACS_RTEE);
 	
-	box(info_win, 0, 0);
+	/*box(info_win, 0, 0);
 	print_in_middle(info_win, 1, 0, 60, "DESCRIPTION", COLOR_PAIR(1));
 	mvwaddch(info_win, 2, 0, ACS_LTEE);
 	mvwhline(info_win, 2, 1, ACS_HLINE, 58);
 	mvwaddch(info_win, 2, 59, ACS_RTEE);
-	info_on_sort(info_win, f2);
+	info_on_sort(info_win, f2);*/
 
 	mvprintw(LINES - 2, 0, "%s\n", a);
 	fgetc(f1);
@@ -140,7 +145,7 @@ void info_on_sort(WINDOW *win, FILE *f2) {
 			wrefresh(win);
 		}
 		if(c == '\n') {
-			wmove(win, count + i + 4, 2); /*i+cnt+3*/
+			wmove(win, count + i + 3, 2); /*i+cnt+3*/
 			wrefresh(win);
 			i++;
 			cnt_nl++;
