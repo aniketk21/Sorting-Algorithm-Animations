@@ -3,47 +3,58 @@
 #include <stdlib.h>
 #include <ncurses.h> 
 #include <errno.h>
-#define NL '\n'
+#define ENTER '\n'
 
-int menu(FILE *f1, char *a);
+int menu(FILE *f1, FILE *f2, char *a);
 
 int main() {
-	char mesg[100];
+	char msg[100];
 	char ch;
 	int row,col;
-	FILE *f1 = fopen("files/instr", "r");
+	FILE *f1, *f2;
+	f1 = fopen("files/instr", "r");
 	if(f1 == NULL) {
-		perror("open failed");
+		perror("open failed on files/instr");
+		return errno;
+	}
+	f2 = fopen("files/win_state", "w");
+	if(f2 == NULL) {
+		perror("open failed on files/instr");
 		return errno;
 	}
 	initscr();
 	raw();
 	noecho();
 	keypad(stdscr, TRUE);
-	start_color();
+	if(has_colors())
+		start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 	getmaxyx(stdscr,row,col);
-	fscanf(f1, "%[^\n]", mesg);
-	mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);
- 	mvchgat(row/2, (col-strlen(mesg))/2, -1, A_BLINK, 1, NULL);
+	fscanf(f1, "%[^\n]", msg);
+	mvprintw(row / 2, (col - strlen(msg)) / 2,"%s", msg);
+	mvchgat(row/2, (col-strlen(msg))/2, -1, A_BOLD, 1, NULL);
 	fgetc(f1);
-	fscanf(f1, "%[^\n]", mesg);
-	attron(A_STANDOUT);
-	mvprintw(LINES - 2, 0, "%s\n",mesg);
-	attroff(A_STANDOUT);
+	fscanf(f1, "%[^\n]", msg);
+	attron(A_REVERSE);
+	mvprintw(row - 2, 0, "%s\n",msg);
+	attroff(A_REVERSE);
+	refresh();
 	ch = getch();
-	if(ch == NL) {
+	if(ch == ENTER) {
  	/* go to next screen window */
+		scr_dump("screen_state");
+		//putwin(stdscr, f2);
 		clear();
 		fgetc(f1);
-		menu(f1, mesg);
+		menu(f1, f2, msg);
 		refresh();
 		getch();
 	}
-	else if(ch == 'n' || ch == 'N') 
+	else if(ch == KEY_BACKSPACE)
 		clear();
 	refresh();
 	endwin();
 	fclose(f1);
- 	return 0;
+	fclose(f2);
+	return 0;
 }

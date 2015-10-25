@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
 				/* Line buffering disabled, Pass on
 					 * everty thing to me 		*/
 	keypad(stdscr, TRUE);		/* I need that nifty F1 	*/
-
-	height = 12;
-	width = 40;
+	curs_set(FALSE);
+	height = 2;
+	width = 4;
 	starty = (LINES - height) / 2;	/* Calculating for a center placement */
 	startx = (COLS - width) / 2;	/* of the window		*/
 	printw("Press F2 to exit");
@@ -27,11 +27,11 @@ int main(int argc, char *argv[])
 	{	switch(ch)
 		{	case KEY_LEFT:
 				destroy_win(my_win);
-				my_win = create_newwin(height, width, starty,--startx);
+				my_win = create_newwin(height, width, starty,startx-=2);
 				break;
 			case KEY_RIGHT:
 				destroy_win(my_win);
-				my_win = create_newwin(height, width, starty,++startx);
+				my_win = create_newwin(height, width, starty,startx+=2);
 				break;
 			case KEY_UP:
 				destroy_win(my_win);
