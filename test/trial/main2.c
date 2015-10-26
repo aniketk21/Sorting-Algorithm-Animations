@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 	FILE *fp1, *fp2;
 	int startx_of_box, starty_of_box, width_of_box, height_of_box, max_x, max_y, cur_y, cur_x;  
 	int ch, i, num[10], j, k, orig_x_of_box, temp, iter_no = 1, inner_iter = 9, swapped = 1;
-	char c, info[64];
+	char c;
 	
 	fp1 = fopen("bubblesort", "r");
 	if(fp1 == NULL) {
@@ -45,44 +45,49 @@ int main(int argc, char *argv[]) {
 	print_intro(fp1, cur_y, cur_x); /* print the introduction page of Bubble Sort */
 	attroff(A_BOLD);
 	attron(A_REVERSE);
-	mvprintw(LINES - 2, 0, "Press <ENTER> to continue or <F2> to exit");
+	mvprintw(LINES - 2, 0, "Press <ENTER> to CONTINUE or 'n' to EXIT");
 	attroff(A_REVERSE);
 	c = getch();
-	if(c == KEY_F(2)) {
+	if(c == 'n') {
 		clear();
 	}	
 	else {
 		clear();
+		
 		attron(A_BOLD);
 		print_in_middle(stdscr, 3, 0, max_x, "BUBBLE SORT", COLOR_PAIR(1));
 		attroff(A_BOLD);
+		
 		for(i = 0; i < 10; i++)
 			fscanf(fp2, "%d", &num[i]);
-		height_of_box = 4;
+		
+		height_of_box = 3;
 		width_of_box = 4;
-		starty_of_box = (max_y - height_of_box) / 4 + 5; //
+		starty_of_box = (max_y - height_of_box) / 4 + 5;
 		startx_of_box = max_x / 4 + 2;
+		
 		attron(A_REVERSE);
-		mvprintw(max_y - 3, 0, "Press <ENTER> to start");
-		mvprintw(max_y - 2, 0, "Press <BACKSPACE> to exit");
+		mvprintw(max_y - 3, 0, "Press <ENTER> to START");
+		/******* Previous menu option *********/
+		mvprintw(max_y - 2, 0, "Press 'n' to EXIT");
 		attroff(A_REVERSE);
-		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* -=2 */
+		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 		startx_of_box += 8;
 		orig_x_of_box = startx_of_box;
-		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* +=3 */
+		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 		attron(A_BOLD);
-		move(max_y / 4 + 5, max_x / 4 + 10); //
+		move(max_y / 4 + 5, max_x / 4 + 10);
 		printw(" ");
 		for(k = 0; k < 10; k++)
 			printw("%d    ", num[k]);
-		attroff(A_BOLD);	
+		attroff(A_BOLD);
 		refresh();
-		//wrefresh(win1);
-		//wrefresh(win2);
 		ch = getch();
 		if(ch == ENTER) {
+			move(max_y - 3, 0);
+			clrtoeol();
 			attron(A_REVERSE);
-			mvprintw(max_y - 2, 0, "Press Right Arrow Key to go to the next step");
+			mvprintw(max_y - 3, 0, "Press Right Arrow Key to go to the next step");
 			attroff(A_REVERSE);
 			sleep(2);
 			attron(A_BOLD);
@@ -91,41 +96,38 @@ int main(int argc, char *argv[]) {
 				swapped = 0;
 				mvprintw(max_y / 4, (max_x - 19) / 2,"Iteration number: %d", iter_no);
 				for(i = 0; i < inner_iter; i++) {
-					move(max_y / 4 + 5, max_x / 4 + 10); //
+					move(max_y / 4 + 5, max_x / 4 + 10);
 					printw(" ");
 					for(k = 0; k < 10; k++)
 						printw("%d    ", num[k]);
 					refresh();
-					//wrefresh(win1);
-					//wrefresh(win2);
-					//sleep(1); /* will produce a lag of 1 sec. */
 					destroy_win(win1);
 					destroy_win(win2);
-					move(max_y / 4 + 5, max_x / 4 + 10); //
+					move(max_y / 4 + 5, max_x / 4 + 10);
 					printw(" ");
 					for(k = 0; k < 10; k++)
 						printw("%d    ", num[k]);
 					refresh();
-					win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* += 2 */
-					win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5); /* +=5 */
+					win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
+					win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5);
 					if(num[i] > num[i + 1]) {
-						move(max_y / 4 + 5, max_x / 4 + 10); //
+						move(max_y / 4 + 5, max_x / 4 + 10);
 						printw(" ");
 						for(k = 0; k < 10; k++)
 							printw("%d    ", num[k]);
 						refresh();
-						move(max_y - 15, 0);
+						move(max_y - 19, 0);
 						clrtoeol();
-						mvprintw(max_y - 15, max_x / 4 + 15, "Element %d is greater than %d.", num[i], num[i + 1]);
-						move(max_y - 13, 0);
+						mvprintw(max_y - 19, max_x / 4 + 18, "Element %d is greater than %d.", num[i], num[i + 1]);
+						move(max_y - 17, 0);
 						clrtoeol();
-						mvprintw(max_y - 13, max_x / 4 + 15, "Hence %d and %d get swapped.", num[i], num[i + 1]);
+						mvprintw(max_y - 17, max_x / 4 + 18, "Hence %d and %d get swapped.", num[i], num[i + 1]);
 						refresh(); /* for printing immediately on the screen */
 						temp = num[i];
 						num[i] = num[i + 1];
 						num[i + 1] = temp;
 						sleep(1);
-						move(max_y / 4 + 5, max_x / 4 + 10); //
+						move(max_y / 4 + 5, max_x / 4 + 10);
 						printw(" ");
 						for(k = 0; k < 10; k++)
 							printw("%d    ", num[k]);
@@ -133,24 +135,34 @@ int main(int argc, char *argv[]) {
 						swapped++;
 					}
 					else {
-						move(max_y - 15, 0);
+						move(max_y - 19, 0);
 						clrtoeol();
-						mvprintw(max_y - 15, max_x / 4 + 15, "Element %d is not greater than %d.", num[i], num[i + 1]);
-						move(max_y - 13, 0);
+						mvprintw(max_y - 19, max_x / 4 + 18, "Element %d is not greater than %d.", num[i], num[i + 1]);
+						move(max_y - 17, 0);
 						clrtoeol();
-						mvprintw(max_y - 13, max_x / 4 + 15, "Hence these two elements don't get swapped");
+						mvprintw(max_y - 17, max_x / 4 + 18, "Hence these two elements don't get swapped");
 						refresh();
 					}
-					move(max_y / 4 + 5, max_x / 4 + 10); //
+					move(max_y / 4 + 5, max_x / 4 + 10);
 					printw(" ");
 					for(k = 0; k < 10; k++)
 						printw("%d    ", num[k]);
 					refresh();
-					getch();
+					ch = getch();
+					if(ch == 'n') {
+						clear();
+						wclear(win1);
+						wclear(win2);
+						delwin(win1);
+						delwin(win2);
+						/* go to main menu */ /***********IMPORTANT**************/
+						endwin();
+						return 0;
+					}
 				}
 				inner_iter--;
 				iter_no++;
-				move(max_y / 4 + 5, max_x / 4 + 10); //
+				move(max_y / 4 + 5, max_x / 4 + 10);
 				printw(" ");
 				for(k = 0; k < 10; k++)
 					printw("%d    ", num[k]);
@@ -163,20 +175,20 @@ int main(int argc, char *argv[]) {
 				wrefresh(win1);
 				wrefresh(win2);
 			}
-			move(max_y / 4 + 5, max_x / 4 + 10); //
+			move(max_y / 4 + 5, max_x / 4 + 10);
 			printw(" ");
 			for(k = 0; k < 10; k++)
 				printw("%d    ", num[k]);
 		}
 		mvprintw(max_y - 10, max_x / 4 + 15, "No swap took place in the previous iteration");
-		mvprintw(max_y - 9, max_x / 4 + 15, "this indicates that the sorting is completed.");
+		mvprintw(max_y - 9, max_x / 4 + 15, "this indicates that the numbers are sorted.");	
+		attroff(A_BOLD);
+		move(max_y - 4, 0);
+		clrtobot();
+		curs_set(TRUE);
+		mvprintw(max_y - 2, 0, "Press any key to continue");
+		getch();
 	}
-	attroff(A_BOLD);
-	move(max_y - 4, 0);
-	clrtobot();
-	curs_set(TRUE);
-	mvprintw(max_y - 2, 0, "Press any key to continue");
-	getch();
 	delwin(win1);
 	delwin(win2);
 	endwin();
@@ -204,7 +216,7 @@ void print_intro(FILE *fp, int cur_y, int cur_x) {
 WINDOW *create_newwin(int height_of_box, int width_of_box, int starty_of_box, int startx_of_box) {
 	WINDOW *local_win;
 	local_win = newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
-	box(local_win, ' ', 0); /* second argument is a whitespace so that the number inside it gets displayed properly */ 
+	box(local_win, 0, 0); /* second argument is a whitespace so that the number inside it gets displayed properly */ 
 	wrefresh(local_win);
 	return local_win;
 }
