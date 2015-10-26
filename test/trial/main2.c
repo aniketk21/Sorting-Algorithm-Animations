@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#define ENTER '\n'
 
 WINDOW *create_newwin(int height_of_box, int width_of_box, int starty_of_box, int startx_of_box);
 void destroy_win(WINDOW *local_win);
@@ -13,7 +14,7 @@ int main(int argc, char *argv[]) {
 	WINDOW *win1, *win2;
 	FILE *fp1, *fp2;
 	int startx_of_box, starty_of_box, width_of_box, height_of_box, max_x, max_y, cur_y, cur_x;  
-	int ch, i, num[10];
+	int ch, i, num[10], j, k, orig_x_of_box, inner_iter = 10, temp;
 	char c, info[64];
 	
 	fp1 = fopen("bubblesort", "r");
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
 	initscr();
 	cbreak();
 	keypad(stdscr, TRUE);
-	//curs_set(FALSE);
+	curs_set(FALSE);
 	if(has_colors())
 		start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
@@ -49,64 +50,79 @@ int main(int argc, char *argv[]) {
 		mvprintw(0, 0, "IF ENT\n");
 		refresh();
 		clear();
-		exit(0);
 	}	
 	else {
 		clear();
 		for(i = 0; i < 10; i++)
 			fscanf(fp2, "%d", &num[i]);
-		height_of_box = 3;
+		height_of_box = 4;
 		width_of_box = 4;
 		starty_of_box = (max_y - height_of_box) / 4;
 		startx_of_box = max_x / 4 + 2; /*(COLS - width_of_box);*/
-
-		mvprintw(max_y - 1, 0, "Press <BACKSPACE> to exit");
-
-		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* -=2 */
-		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 8); /* +=3 */
+		mvprintw(max_y - 3, 0, "Press <ENTER> to start");
+		mvprintw(max_y - 2, 0, "Press <BACKSPACE> to exit");
 		
-		/*mvprintw((max_y / 4), (max_x / 4 + 10), " 5    1    3    7    9    0    6    2    4    8\n");
-		*/
+		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* -=2 */
+		startx_of_box += 8;
+		orig_x_of_box = startx_of_box;
+		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* +=3 */
+		
 		move(max_y / 4, max_x / 4 + 10);
 		printw(" ");
-		for(i = 0; i < 10; i++)
-			printw("%d    ", num[i]);
-		printw("\n");
-		move(starty_of_box, startx_of_box);
+		for(k = 0; k < 10; k++)
+			printw("%d    ", num[k]);
 		refresh();
 		wrefresh(win1);
 		wrefresh(win2);
-		while((ch = getch()) != KEY_BACKSPACE) {
-			for(i = 0; i < 9; i++) {
-				//mvprintw(max_y / 4, max_x / 4 + 10, " 5    1    3    7    9    0    6    2    4    8\n");
-				//refresh();
+		ch = getch();
+		if(ch == ENTER) {
+			for(j = 0; j < 10; j++) {
+				for(i = 0; i < inner_iter; i++) {
+					if(num[i] > num[i + 1]) {
+						mvprintw(max_y - 20, 1, "Element %d is greater than %d.", num[i], num[i + 1]);
+						mvprintw(max_y - 19, 1, "Hence %d and %d get swapped.", num[i], num[i + 1]);
+						refresh();
+						temp = num[i];
+						num[i] = num[i + 1];
+						num[i + 1] = temp;
+					}
+					sleep(1);
+					move(max_y / 4, max_x / 4 + 10);
+					printw(" ");
+					for(k = 0; k < 10; k++)
+						printw("%d    ", num[k]);
+					refresh();
+					wrefresh(win1);
+					wrefresh(win2);
+					sleep(2); /* will produce a lag of 2 sec. */
+					destroy_win(win1);
+					destroy_win(win2);
+					win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* += 2 */
+					win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5); /* +=5 */
+				}
+				inner_iter--;
 				move(max_y / 4, max_x / 4 + 10);
 				printw(" ");
-				for(i = 0; i < 10; i++)
-					printw("%d    ", num[i]);
-				printw("\n");
-				move(starty_of_box, startx_of_box);
+				for(k = 0; k < 10; k++)
+					printw("%d    ", num[k]);
 				refresh();
-
-				wrefresh(win1);
-				wrefresh(win2);
-				sleep(2); /* will produce a lag of 2 sec. */
 				destroy_win(win1);
 				destroy_win(win2);
-				win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* += 2 */
-				win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5);
+				win1 = create_newwin(height_of_box, width_of_box, starty_of_box, orig_x_of_box);
+				startx_of_box = orig_x_of_box;
+				win2 = create_newwin(height_of_box, width_of_box, starty_of_box, orig_x_of_box + 5);
+				wrefresh(win1);
+				wrefresh(win2);
 			}
-			//mvprintw(max_y / 4, max_x / 4 + 10, " 5    1    3    7    9    0    6    2    4    8\n");
 			move(max_y / 4, max_x / 4 + 10);
 			printw(" ");
-			for(i = 0; i < 10; i++)
-				printw("%d    ", num[i]);
-			printw("\n");
-			move(starty_of_box, startx_of_box);
-			refresh();
+			for(k = 0; k < 10; k++)
+				printw("%d    ", num[k]);
 		}
 	}
-	//getch();
+	getch();
+	delwin(win1);
+	delwin(win2);
 	endwin();
 	fclose(fp1);
 	fclose(fp2);
