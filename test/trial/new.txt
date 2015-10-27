@@ -1,0 +1,11 @@
+shell sort
+statistics : no. of comparisons, swaps
+Library:
+1. Number type
+2. has a function pointer
+3. demo type
+-----
+user will enter number of elements say N to perform sorting on. program will generate N numbers randomly
+add an option to fast forward
+go to nth iteration
+

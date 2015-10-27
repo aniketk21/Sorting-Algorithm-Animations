@@ -15,7 +15,6 @@ char *choices[] = {
 		"1. Bubble Sort",
 		"2. Quicksort",
 		"3. Selection Sort",
-		"4. Insertion Sort",
 		(char *)NULL,
 		  };
 
