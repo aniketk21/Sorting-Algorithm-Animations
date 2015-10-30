@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 		
 		height_of_box = 3;
 		width_of_box = 4;
-		starty_of_box = (max_y - height_of_box) / 4 + 4; // + 5;
+		starty_of_box = (max_y - height_of_box) / 4 + 5; // + 5;
 		startx_of_box = max_x / 4 + 2;
 		
 		attron(A_REVERSE);
