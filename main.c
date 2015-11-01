@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <ncurses.h> 
-#include <errno.h>
-#define ENTER '\n'
-
-int menu(FILE *f1, FILE *f2, char *a);
+#include "sort_animation.h"
 
 int main() {
 	char msg[100];
@@ -40,15 +33,11 @@ int main() {
 	attroff(A_REVERSE);
 	refresh();
 	ch = getch();
-	if(ch == ENTER) {
- 	/* go to next screen window */
-		scr_dump("screen_state");
-		//putwin(stdscr, f2);
+	if(ch == ENTER) { /* go to next screen window */
 		clear();
 		fgetc(f1);
-		menu(f1, f2, msg);
+		menu(f1, msg); /* print the menu */
 		refresh();
-		getch();
 	}
 	else if(ch == KEY_BACKSPACE)
 		clear();

@@ -1,5 +1,5 @@
-main: main.o menu.o print_in_middle.o
-	cc main.o menu.o print_in_middle.o -Wall -lm -lmenu -lncurses -o main
+main: main.o menu.o print_in_middle.o bubblesort.o
+	cc main.o menu.o print_in_middle.o bubblesort.o -Wall -lm -lmenu -lncurses -o main
 main.o: main.c
 	cc -c -Wall main.c
 bubblesort.o: bubblesort.c
