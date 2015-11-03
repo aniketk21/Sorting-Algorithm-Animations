@@ -3,7 +3,6 @@
 int main() {
 	char msg[100];
 	char ch;
-	int row,col;
 	FILE *f1, *f2;
 	f1 = fopen("files/instr", "r");
 	if(f1 == NULL) {
@@ -15,24 +14,14 @@ int main() {
 		perror("open failed on files/instr");
 		return errno;
 	}
-	initscr();
+	initscr(); /* initialise curses mode */
 	raw();
-	noecho();
+	noecho(); /* echoing of characters is turned off */
 	keypad(stdscr, TRUE);
 	if(has_colors())
 		start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
-	getmaxyx(stdscr,row,col);
-	fscanf(f1, "%[^\n]", msg);
-	mvprintw(row / 2, (col - strlen(msg)) / 2,"%s", msg);
-	mvchgat(row/2, (col-strlen(msg))/2, -1, A_BOLD, 1, NULL);
-	fgetc(f1);
-	fscanf(f1, "%[^\n]", msg);
-	attron(A_REVERSE);
-	mvprintw(row - 2, 0, "%s\n",msg);
-	attroff(A_REVERSE);
-	refresh();
-	ch = getch();
+	ch = start(msg, f1, f2);	
 	if(ch == ENTER) { /* go to next screen window */
 		clear();
 		fgetc(f1);
@@ -47,3 +36,21 @@ int main() {
 	fclose(f2);
 	return 0;
 }
+
+char start(char *msg, FILE *f1, FILE *f2) {
+	char ch;
+	int row, col;
+	init_pair(1, COLOR_CYAN, COLOR_BLACK);
+	getmaxyx(stdscr,row,col);
+	fscanf(f1, "%[^\n]", msg);
+	mvprintw(row / 2, (col - strlen(msg)) / 2,"%s", msg);
+	mvchgat(row/2, (col-strlen(msg))/2, -1, A_BOLD, 1, NULL);
+	fgetc(f1);
+	fscanf(f1, "%[^\n]", msg);
+	attron(A_REVERSE);
+	mvprintw(row - 2, 0, "%s\n",msg);
+	attroff(A_REVERSE);
+	refresh();
+	ch = getch();
+	return ch;
+}	

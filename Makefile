@@ -1,5 +1,5 @@
-main: main.o menu.o print_in_middle.o bubblesort.o
-	cc main.o menu.o print_in_middle.o bubblesort.o -Wall -lm -lmenu -lncurses -o main
+main: main.o menu.o print_in_middle.o bubblesort.o num_generator.o
+	cc main.o menu.o print_in_middle.o bubblesort.o num_generator.o -Wall -lm -lmenu -lncurses -o main
 main.o: main.c
 	cc -c -Wall main.c
 bubblesort.o: bubblesort.c
@@ -10,3 +10,5 @@ menu.o: menu.c
 	cc -c -Wall menu.c
 print_in_middle.o: print_in_middle.c
 	cc -c -Wall print_in_middle.c
+num_generator.o: num_generator.c
+	cc -c -Wall num_generator.c
