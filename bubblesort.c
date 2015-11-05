@@ -1,32 +1,38 @@
+/*  Sorting Algorithm Animations.
+ *  Copyright (C) 2015 kaniket21@gmail.com Aniket Kulkarni.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "sort_animation.h"
 
 int bubblesort(void) {
 	WINDOW *win1, *win2;
-	FILE *fp1, *fp2;
+	FILE *fp1;
 	int startx_of_box, starty_of_box, width_of_box, height_of_box, max_x, max_y, cur_y, cur_x;  
 	int ch, i, j, orig_x_of_box, temp, iter_no = 1, inner_iter, swapped = 1, random = 1;
 	char c;
 	data bsort;
-
+	
 	fp1 = fopen("files/bubblesort.txt", "r");
 	if(fp1 == NULL) {
 		perror("open failed on file bubblesort.txt");
 		return errno;
 	}	
 	
-	fp2 = fopen("files/num.txt", "r");
-	if(fp2 == NULL) {
-		perror("open failed on file num.txt");
-		return errno;
-	}
-
-	//initscr();
+	init_sort_info(&bsort);
 	cbreak();
-	//keypad(stdscr, TRUE);
-	//curs_set(FALSE);
-	//if(has_colors())
-	//	start_color();
-	//init_pair(1, COLOR_CYAN, COLOR_BLACK);
 	getmaxyx(stdscr, max_y, max_x);
 	attron(A_BOLD);
 	print_in_middle(stdscr, 5, 0, max_x, "BUBBLE SORT", COLOR_PAIR(1));
@@ -56,7 +62,6 @@ int bubblesort(void) {
 		width_of_box = 4;
 		starty_of_box = (max_y - height_of_box) / 4 + 5;
 		startx_of_box = max_x / 4 + 2;
-		
 		attron(A_REVERSE);
 		mvprintw(max_y - 3, 0, "Press <ENTER> to START");
 		mvprintw(max_y - 2, 0, "Press 'n' to EXIT");
@@ -91,6 +96,7 @@ int bubblesort(void) {
 					print_numbers(&bsort, max_y, max_x);
 					win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 					win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5);
+					bsort.comparisons++;
 					if(bsort.numbers[i] > bsort.numbers[i + 1]) {
 						print_numbers(&bsort, max_y, max_x);
 						sleep(1);
@@ -104,7 +110,7 @@ int bubblesort(void) {
 						temp = bsort.numbers[i];
 						bsort.numbers[i] = bsort.numbers[i + 1];
 						bsort.numbers[i + 1] = temp;
-						//sleep(2);
+						bsort.swaps++;
 						sleep(1);
 						print_numbers(&bsort, max_y, max_x);
 						swapped++;
@@ -118,18 +124,8 @@ int bubblesort(void) {
 						clrtoeol();
 						mvprintw(max_y - 17, max_x / 4 + 18, "Hence these two elements don't get swapped");
 						refresh();
-						//sleep(1);
 					}
 					print_numbers(&bsort, max_y, max_x);
-					/*destroy_win(win1);
-					destroy_win(win2);
-					move(max_y / 4 + 5, max_x / 4 + 10);
-					printw(" ");
-					for(k = 0; k < 10; k++)
-						printw("%d    ", num[k]);
-					refresh();
-					win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
-					win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5);*/
 					ch = getch();
 					if(ch == 'n') {
 						clear();
@@ -137,7 +133,6 @@ int bubblesort(void) {
 						wclear(win2);
 						delwin(win1);
 						delwin(win2);
-						//endwin();
 						return 0;
 					}
 				}
@@ -154,18 +149,20 @@ int bubblesort(void) {
 				wrefresh(win2);
 				print_numbers(&bsort, max_y, max_x);
 			}
-			print_numbers(&bsort, max_y, max_x);
-		}
-		move(max_y - 19, 0);
-		clrtobot();
-		if(iter_no != bsort.elements) {
-			mvprintw(max_y - 10, max_x / 4 + 15, "No swap took place in the previous iteration");
-			mvprintw(max_y - 9, max_x / 4 + 15, "this indicates that the numbers are sorted.");
-		}
-		else {
-			mvprintw(max_y - 10, max_x / 4 + 15, "Yeah! The numbers are sorted!!");
+			move(max_y - 19, 0);
+			clrtobot();
+			if(iter_no != bsort.elements) {
+				mvprintw(max_y - 18, max_x / 4 + 15, "No swap took place in the previous iteration");
+				mvprintw(max_y - 17, max_x / 4 + 15, "this indicates that the numbers are sorted.");
+			}
+			else {
+				mvprintw(max_y - 18, max_x / 4 + 15, "Yeah! The numbers are sorted!!");
+			}
+			mvprintw(max_y - 14, max_x / 4 + 15, "Info:");
+			mvprintw(max_y - 12, max_x / 4 + 15, "Number of swaps = %d", bsort.swaps);
+			mvprintw(max_y - 10, max_x / 4 + 15, "Number of comparisons = %d", bsort.comparisons);
+			attroff(A_BOLD);
 		}	
-		attroff(A_BOLD);
 		move(max_y - 4, 0);
 		clrtobot();
 		curs_set(TRUE);
@@ -174,79 +171,6 @@ int bubblesort(void) {
 	}
 	delwin(win1);
 	delwin(win2);
-	//endwin();
 	fclose(fp1);
-	fclose(fp2);
 	return 0;
-}
-
-void print_intro(FILE *fp, int cur_y, int cur_x) {
-	char desc[64];
-	int y, x, cnt;
-	y = cur_y;
-	x = cur_x;
-	cnt = 0;
-	while(cnt < 20) {
-		fscanf(fp, "%[^\n]", desc);
-		fgetc(fp);
-		mvprintw(y, x, "%s", desc);
-		y++;
-		cnt++;
-	}
-	refresh();
-}
-
-void print_numbers(data *p, int max_y, int max_x) {
-	short int k;
-	move(max_y / 4 + 5, max_x / 4 + 10);
-	printw(" ");
-	for(k = 0; k < p->elements; k++)
-		printw("%d    ", p->numbers[k]);
-	refresh();
-}	
-
-WINDOW *create_newwin(int height_of_box, int width_of_box, int starty_of_box, int startx_of_box) {
-	WINDOW *local_win;
-	local_win = newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
-	box(local_win, 0, 0); /* second argument is a whitespace so that the number inside it gets displayed properly */ 
-	wrefresh(local_win);
-	return local_win;
-}
-
-void get_num_elem(data *p) { /* this function is to get from the user the number of elements to perform sorting on */
-	while(1) {
-		clear();
-		mvprintw(1, 0, "Enter the number of elements to perform sorting on [Min: 2, Max: 10] and then press <ENTER> ");
-		scanw("%d", &p->elements);
-		refresh();
-		if((p->elements >= 2) && (p->elements <= 10))
-			return;
-		else {
-			clear();
-			mvprintw(1, 0, "Enter a number between 2 & 10...\nPress any key to continue...");
-			refresh();
-			getch();
-		}
-	}
-}
-
-void destroy_win(WINDOW *local_win) {	
-	/* box(local_win, ' ', ' '); : This won't produce the desired
-	 * result of erasing the window. It will leave it's four corners 
-	 * and so an ugly remnant of window. 
-	 */
-	wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
-	/* The parameters taken are 
-	 * 1. win: the window on which to operate
-	 * 2. ls: character to be used for the left side of the window 
-	 * 3. rs: character to be used for the right side of the window 
-	 * 4. ts: character to be used for the top side of the window 
-	 * 5. bs: character to be used for the bottom side of the window 
-	 * 6. tl: character to be used for the top left corner of the window 
-	 * 7. tr: character to be used for the top right corner of the window 
-	 * 8. bl: character to be used for the bottom left corner of the window 
-	 * 9. br: character to be used for the bottom right corner of the window
-	 */
-	wrefresh(local_win);
-	delwin(local_win);
 }

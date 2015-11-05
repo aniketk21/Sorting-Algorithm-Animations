@@ -17,26 +17,30 @@
 
 #include "sort_animation.h"
 
-void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) {
-	int length, x, y;
-	float temp;
-
-	if(win == NULL)
-		win = stdscr;
-	getyx(win, y, x);
-	if(startx != 0)
-		x = startx;
-	if(starty != 0)
-		y = starty;
-	if(width == 0)
-		width = 80;
-
-	length = strlen(string);
-	temp = (width - length)/ 2;
-	x = startx + (int)temp;
-	wattron(win, color);
-	mvwprintw(win, y, x, "%s", string);
-	wattroff(win, color);
+void print_numbers(data *p, int max_y, int max_x) { /* print the numbers */
+	short int k;
+	move(max_y / 4 + 5, max_x / 4 + 10);
+	printw(" ");
+	for(k = 0; k < p->elements; k++)
+		printw("%d    ", p->numbers[k]);
 	refresh();
-}
+}	
 
+void get_num_elem(data *p) { /* this function is to get from the user the number of elements to perform sorting on */
+	echo();
+	while(1) {
+		clear();
+		mvprintw(1, 0, "Enter the number of elements to perform sorting on [Min: 2, Max: 10] and then press <ENTER> ");
+		scanw("%d", &p->elements);
+		refresh();
+		if((p->elements >= 2) && (p->elements <= 10))
+			return;
+		else {
+			clear();
+			mvprintw(1, 0, "Enter a number between 2 & 10...\nPress any key to continue...");
+			refresh();
+			getch();
+		}
+	}
+	noecho();
+}
