@@ -17,15 +17,12 @@
 
 #include "sort_animation.h"
 
-int main() {
-	char msg[100];
+int main(int argc, char *argv[]) {
+	if(argc > 1) {
+		printf("Usage: ./<executable file name>\n\n");
+		return 0;
+	}	
 	char ch;
-	FILE *f1;
-	f1 = fopen("files/intro.txt", "r");
-	if(f1 == NULL) {
-		perror("open failed on files/intro.txt");
-		return errno;
-	}
 	initscr(); /* initialise curses mode */
 	raw();
 	noecho(); /* echoing of characters is turned off */
@@ -33,35 +30,28 @@ int main() {
 	if(has_colors())
 		start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
-	ch = start(msg, f1);	
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
+	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+	ch = start();	
 	if(ch == ENTER) { /* go to next screen window */
 		clear();
-		fgetc(f1);
-		menu(f1, msg); /* print the menu */
-		refresh();
+		menu(); /* print the menu and proceed */
 	}
 	else if(ch == KEY_BACKSPACE)
 		clear();
 	refresh();
 	endwin();
-	fclose(f1);
+	//printf("\nThanks!\n");
 	return 0;
 }
 
-char start(char *msg, FILE *f1) {
-	char ch;
+char start(void) {
+	char choice;
 	int row, col;
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 	getmaxyx(stdscr, row, col);
-	fscanf(f1, "%[^\n]", msg);
-	mvprintw(row / 2, (col - strlen(msg)) / 2,"%s", msg);
-	mvchgat(row/2, (col-strlen(msg))/2, -1, A_BOLD, 1, NULL);
-	fgetc(f1);
-	fscanf(f1, "%[^\n]", msg);
-	attron(A_REVERSE);
-	mvprintw(row - 2, 0, "%s\n",msg);
-	attroff(A_REVERSE);
-	refresh();
-	ch = getch();
-	return ch;
+	print_in_middle(stdscr, row / 2, 0, col, "SORTING ALGORITHM ANIMATIONS", COLOR_PAIR(1));
+	instruction(row - 2, 0, "Press <ENTER> to continue or <BACKSPACE> to exit.");
+	choice = getch();
+	return choice;
 }

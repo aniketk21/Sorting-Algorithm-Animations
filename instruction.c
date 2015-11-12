@@ -15,15 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* this function returns the number of rows in a file */
 #include "sort_animation.h"
 
-int num_of_rows(FILE *fp) {
-	int cnt;
-	char c;
-	while((c = getc(fp)) != EOF) {
-		if(c == '\n')
-			cnt++;
-	}
-	return cnt;
+void instruction(int y, int x, char *str) {
+	attron(A_REVERSE | A_BOLD);	
+	mvprintw(y, x, "%s", str);
+	refresh();
+	attroff(A_REVERSE | A_BOLD);
+	return;
 }

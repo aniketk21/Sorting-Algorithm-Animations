@@ -1,5 +1,0 @@
-Quicksort, also known as partition-exchange sort, is an efficient sorting algorithm, serving as a systematic method for placing the elements of an array in order. It was developed by Tony Hoare in 1959.
-Worst case performance 		O(n^2)
-Best case performance 		O(n log n)
-Average case performance 	O(n log n)
-Worst case space complexity 	O(n) auxiliary

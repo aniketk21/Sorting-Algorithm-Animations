@@ -24,10 +24,11 @@ void print_numbers(data *p, int max_y, int max_x) { /* print the numbers */
 	for(k = 0; k < p->elements; k++)
 		printw("%d    ", p->numbers[k]);
 	refresh();
-}	
+}
 
 void get_num_elem(data *p) { /* this function is to get from the user the number of elements to perform sorting on */
 	echo();
+	attron(A_BOLD);
 	while(1) {
 		clear();
 		mvprintw(1, 0, "Enter the number of elements to perform sorting on [Min: 2, Max: 10] and then press <ENTER> ");
@@ -42,5 +43,6 @@ void get_num_elem(data *p) { /* this function is to get from the user the number
 			getch();
 		}
 	}
+	attroff(A_BOLD);
 	noecho();
 }

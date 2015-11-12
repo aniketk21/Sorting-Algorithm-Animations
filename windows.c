@@ -46,3 +46,10 @@ void destroy_win(WINDOW *local_win) { /* this function destroys a window */
 	wrefresh(local_win);
 	delwin(local_win);
 }
+
+void clear_boxes(int starty_of_box) {
+	move(starty_of_box, 0);
+	clrtoeol();
+	move(starty_of_box + 2, 0);
+	clrtoeol();
+}	

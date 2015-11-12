@@ -24,16 +24,12 @@ char *choices[] = {
 		(char *)NULL,
 		  };
 
-void menu(FILE *f1, char *a) {
+void menu(void) {
 	int c, y_orig, x_orig, y_new, x_new, n_choices, i, selected_index, selected = 0;
 	const char *ch = NULL;
 	ITEM **my_items, *current_selection;
 	MENU *menu;
 	WINDOW *menu_window;
-
-	fscanf(f1, "%[^\n]", a);
-
-	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 
 	/* Create items */
 	n_choices = ARRAY_SIZE(choices);
@@ -68,15 +64,9 @@ void menu(FILE *f1, char *a) {
 	mvwhline(menu_window, 2, 1, ACS_HLINE, 38);
 	mvwaddch(menu_window, 2, 39, ACS_RTEE);
 	wrefresh(menu_window);	
-
-	attron(A_REVERSE);
-	mvprintw(y_orig - 3, 0, "%s\n", a);
-	fgetc(f1);
-	fscanf(f1, "%[^\n]", a);
-	mvprintw(y_orig - 2, 0, "%s\n", a);
-	fgetc(f1);
-	attroff(A_REVERSE);
-	refresh();
+	
+	instruction(y_orig - 3, 0, "Press ARROW keys to move and <ENTER> to select.");
+	instruction(y_orig - 2, 0, "Press <BACKSPACE> to exit.\n");
         
 	/* Post the menu */
 	post_menu(menu);
@@ -105,7 +95,7 @@ void menu(FILE *f1, char *a) {
 					selected = 1;
 					scr_dump("screen_state");
 					clear();
-					mvprintw(10, 10, "Qsort");
+					quicksort();
 					refresh();
 				}
 				else if(selected_index == 2) {
@@ -131,4 +121,4 @@ void menu(FILE *f1, char *a) {
 	free_menu(menu);
 	for(i = 0; i < n_choices; ++i)
 		free_item(my_items[i]);
-}		
+}

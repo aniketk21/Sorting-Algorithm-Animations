@@ -1,5 +1,5 @@
-main: main.o menu.o print_in_middle.o bubblesort.o selectionsort.o num_generator.o num_of_rows.o init_sort_info.o num_io.o print_intro.o windows.o
-	cc main.o menu.o print_in_middle.o bubblesort.o selectionsort.o num_generator.o num_of_rows.o init_sort_info.o -Wall -lm -lmenu -lncurses num_io.o print_intro.o windows.o -o main
+project: main.o menu.o print_in_middle.o bubblesort.o selectionsort.o quicksort.o num_generator.o num_of_rows.o init_sort_info.o num_io.o print_intro.o windows.o instruction.o box_over_num.o
+	cc main.o menu.o print_in_middle.o bubblesort.o selectionsort.o  quicksort.o num_generator.o num_of_rows.o init_sort_info.o -Wall -lm -lmenu -lncurses num_io.o print_intro.o windows.o instruction.o box_over_num.o -o project
 main.o: main.c
 	cc -c -Wall main.c
 bubblesort.o: bubblesort.c
@@ -24,3 +24,7 @@ print_intro.o: print_intro.c
 	cc -c -Wall print_intro.c
 windows.o: windows.c
 	cc -c -Wall windows.c
+instruction.o: instruction.c
+	cc -c -Wall instruction.c
+box_over_num.o: box_over_num.c
+	cc -c -Wall box_over_num.c

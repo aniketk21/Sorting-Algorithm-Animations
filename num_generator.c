@@ -35,7 +35,12 @@ int num_generator(data *p) {
 			flag = 1;
 	}
 	if(flag == 0)
-		return 0;
-	else
 		return 1;
-}										
+	else
+		return 0;
+}
+
+void message(int max_y) {
+	mvprintw(max_y / 4, 0, "Generating random numbers...");
+	refresh();
+}

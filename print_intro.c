@@ -17,19 +17,22 @@
 
 #include "sort_animation.h"
 
-void print_intro(FILE *fp, int cur_y, int cur_x) { /* prints the introduction page of the sorting algorithm */
+void print_intro(FILE *fp, int start_y, int start_x) { /* prints the introduction page of the sorting algorithm */
 	char desc[64];
 	int y, x, cnt = 0, rows_in_file;
-	y = cur_y;
-	x = cur_x;
+	y = start_y;
+	x = start_x;
+	move(y, x);
 	rows_in_file = num_of_rows(fp); /* num_of_rows returns the number of rows in a file */
 	rewind(fp); /* num_of_rows function takes the curses to EOF, so rewind() the file pointer */
+	attron(A_BOLD);
 	while(cnt < rows_in_file) {
 		fscanf(fp, "%[^\n]", desc);
-		fgetc(fp);
+		fgetc(fp); /* eat the '\n' */
 		mvprintw(y, x, "%s", desc);
 		y++;
 		cnt++;
 	}
 	refresh();
+	attroff(A_BOLD);
 }

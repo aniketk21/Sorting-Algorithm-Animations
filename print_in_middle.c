@@ -20,7 +20,6 @@
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) {
 	int length, x, y;
 	float temp;
-
 	if(win == NULL)
 		win = stdscr;
 	getyx(win, y, x);
@@ -30,13 +29,11 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 		y = starty;
 	if(width == 0)
 		width = 80;
-
 	length = strlen(string);
-	temp = (width - length)/ 2;
+	temp = (width - length) / 2;
 	x = startx + (int)temp;
-	wattron(win, color);
+	wattron(win, color | A_BOLD);
 	mvwprintw(win, y, x, "%s", string);
-	wattroff(win, color);
+	wattroff(win, color | A_BOLD);
 	refresh();
 }
-
