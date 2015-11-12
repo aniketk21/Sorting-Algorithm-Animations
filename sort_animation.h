@@ -38,13 +38,6 @@ typedef struct data {
 	uint comparisons; /* for storing the number of comparisons the sorting algorithm makes */
 } data;
 
-typedef struct num_box {
-	short int height; /* height of box */
-	short int width; /* width of box */
-	int start_y; /* starting y coordinate of left corner of box */
-	int start_x; /* starting x coordinate of left corner of box */
-} num_box;
-
 /* menu function prints the main menu containing the list of sorting algorithms */
 void menu(void);
 

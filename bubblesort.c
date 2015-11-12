@@ -40,12 +40,11 @@ int bubblesort(void) {
 	
 	start_y = max_y / 4;
 	start_x = max_x / 4 + 4;
-	
 	print_intro(fp1, start_y, start_x); /* print the introduction page of Bubble Sort */
 	
 	instruction(max_y - 2, 0, "Press <ENTER> to CONTINUE or 'p' to return to the previous menu.");
 	c = getch();
-	if(c == 'p') {
+	if(c == 'p') { /* exit */
 		clear();
 		curs_set(TRUE);
 		return 0;
@@ -65,21 +64,25 @@ int bubblesort(void) {
 		inner_iter = bsort.elements; /* inner_iter is used in second 'for' loop below as a loop control variable */
 		height_of_box = 3;
 		width_of_box = 4;
-		starty_of_box = (max_y - height_of_box) / 4 + 5;
-		startx_of_box = max_x / 4 + 2;
+		starty_of_box = (max_y - height_of_box) / 4 + 5; /* starting y coordinate of the box */
+		startx_of_box = max_x / 4 + 2; /* starting x coordinate of the box */
+		
 		instruction(max_y - 3, 0, "Press <ENTER> to START.");
-		instruction(max_y - 2, 0, "Press 'p' to go to Main Menu.\n");
+		instruction(max_y - 2, 0, "Press 'p' to go to the Main Menu.\n");
 		
 		curs_set(FALSE); /* curs_set(TRUE) shows a dirty cursor at top-left of the box */
+		
 		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 		startx_of_box += 8;
 		orig_x_of_box = startx_of_box;
 		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
+		
 		attron(A_BOLD);
 		print_numbers(&bsort, max_y, max_x);
 		attroff(A_BOLD);	
+		
 		choice = getch();
-		if(choice == 'p') {
+		if(choice == 'p') { /* exit */
 			clear();
 			curs_set(TRUE);
 			destroy_win(win1);
@@ -89,8 +92,12 @@ int bubblesort(void) {
 		else if(choice == ENTER) {
 			move(max_y - 3, 0);
 			clrtoeol();
-			instruction(max_y - 8, 0, "GREEN: Final position of element.");
-			instruction(max_y - 3, 0, "Press Right Arrow Key to proceed to the next step.");
+			
+			attron(A_BOLD);
+			mvprintw(max_y - 12, 0, "GREEN: Final position of element.");
+			attroff(A_BOLD);
+			
+			instruction(max_y - 3, 0, "Press <Right Arrow Key> to proceed to the next step.");
 			sleep(3);
 			attron(A_BOLD);
 			for(j = 0; swapped && j < bsort.elements - 1; j++) {
@@ -107,7 +114,7 @@ int bubblesort(void) {
 					win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 					win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box += 5);
 					
-					bsort.comparisons++;
+					bsort.comparisons++; /* increment the number of comparisons in bsort */
 					if(bsort.numbers[i] > bsort.numbers[i + 1]) {
 						print_numbers(&bsort, max_y, max_x);
 						sleep(0.5);
@@ -120,10 +127,10 @@ int bubblesort(void) {
 						mvprintw(max_y - 17, max_x / 4 + 18, "Hence %d and %d get swapped.", bsort.numbers[i], bsort.numbers[i + 1]);
 						refresh(); /* for printing immediately on the screen */
 						
-						temp = bsort.numbers[i];
+						temp = bsort.numbers[i]; /* swap the numbers */
 						bsort.numbers[i] = bsort.numbers[i + 1];
 						bsort.numbers[i + 1] = temp;
-						bsort.swaps++;
+						bsort.swaps++; /* increment the number of swaps in bsort */
 						
 						sleep(2);
 						print_numbers(&bsort, max_y, max_x);
@@ -136,13 +143,13 @@ int bubblesort(void) {
 						mvprintw(max_y - 19, max_x / 4 + 18, "Element %d is not greater than %d.", bsort.numbers[i], bsort.numbers[i + 1]);
 						move(max_y - 17, 0);
 						clrtoeol();
-						mvprintw(max_y - 17, max_x / 4 + 18, "Hence these two elements don't get swapped");
+						mvprintw(max_y - 17, max_x / 4 + 18, "Hence these two elements don't get swapped.");
 						refresh();
 					}
 					print_numbers(&bsort, max_y, max_x);
 					
 					choice = getch();
-					if(choice == 'p') {
+					if(choice == 'p') { /* exit */
 						clear();
 						curs_set(TRUE);
 						destroy_win(win1);
@@ -151,7 +158,7 @@ int bubblesort(void) {
 					}
 				}
 				inner_iter--;/* this is to make the second box go one unit lesser to the right after each iteration */
-				iter_no++;
+				iter_no++; /* increment the number of iterations */
 				print_numbers(&bsort, max_y, max_x);
 				sleep(1);
 				
@@ -160,6 +167,7 @@ int bubblesort(void) {
 				win1 = create_newwin(height_of_box, width_of_box, starty_of_box, orig_x_of_box);
 				startx_of_box = orig_x_of_box;
 				win2 = create_newwin(height_of_box, width_of_box, starty_of_box, orig_x_of_box + 5);
+				/* display a box over the sorted element */
 				box_over_num(inner_iter, win3, max_y, max_x, height_of_box, width_of_box, 3);
 				print_numbers(&bsort, max_y, max_x);
 			}
@@ -167,19 +175,20 @@ int bubblesort(void) {
 			destroy_win(win2);
 			print_numbers(&bsort, max_y, max_x);
 			sleep(1);
-			clear_boxes(starty_of_box);
+			clear_boxes(starty_of_box); /* clear the boxes from the screen to display the numbers */
+			
 			move(max_y - 19, 0);
 			clrtobot();
 			if(iter_no != bsort.elements) {
-				mvprintw(max_y - 18, max_x / 4 + 15, "No swap took place in the previous iteration");
-				mvprintw(max_y - 17, max_x / 4 + 15, "this indicates that the numbers are sorted.");
+				mvprintw(max_y - 17, max_x / 4 + 15, "No swap took place in the previous iteration");
+				mvprintw(max_y - 16, max_x / 4 + 15, "this indicates that the numbers are sorted.");
 			}
 			else {
-				mvprintw(max_y - 18, max_x / 4 + 15, "Yeah! The numbers are sorted!!");
+				mvprintw(max_y - 17, max_x / 4 + 15, "Yeah! The numbers are sorted!!");
 			}
-			mvprintw(max_y - 14, max_x / 4 + 15, "Info:");
-			mvprintw(max_y - 12, max_x / 4 + 15, "Number of swaps = %d", bsort.swaps);
-			mvprintw(max_y - 10, max_x / 4 + 15, "Number of comparisons = %d", bsort.comparisons);
+			mvprintw(max_y - 13, max_x / 4 + 15, "Info:");
+			mvprintw(max_y - 11, max_x / 4 + 15, "Number of swaps = %d", bsort.swaps);
+			mvprintw(max_y - 9, max_x / 4 + 15, "Number of comparisons = %d", bsort.comparisons);
 		}
 		move(max_y - 4, 0);
 		clrtobot();
