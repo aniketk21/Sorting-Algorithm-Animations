@@ -17,7 +17,8 @@
 
 #include "sort_animation.h"
 
-void init_sort_info(data *p) {
+void init_sort_info(data *p) { /* initialise sorting information */
 	p->swaps = 0;
 	p->comparisons = 0;
-}	
+	return;
+}

@@ -17,7 +17,7 @@
 
 #include "sort_animation.h"
 
-/* create_newwin creates a window of specifies dimensions */
+/* create_newwin creates a window of specified dimensions */
 WINDOW *create_newwin(int height_of_box, int width_of_box, int starty_of_box, int startx_of_box) {
 	WINDOW *local_win;
 	local_win = newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
@@ -27,10 +27,6 @@ WINDOW *create_newwin(int height_of_box, int width_of_box, int starty_of_box, in
 }
 
 void destroy_win(WINDOW *local_win) { /* this function destroys a window */
-	/* box(local_win, ' ', ' '); : This won't produce the desired
-	 * result of erasing the window. It will leave it's four corners 
-	 * and so an ugly remnant of window. 
-	 */
 	wborder(local_win, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
 	/* The parameters taken are 
 	 * 1. win: the window on which to operate
@@ -45,11 +41,13 @@ void destroy_win(WINDOW *local_win) { /* this function destroys a window */
 	 */
 	wrefresh(local_win);
 	delwin(local_win);
+	return;
 }
 
-void clear_boxes(int starty_of_box) {
+void clear_boxes(int starty_of_box) { /* clear the boxes after the animation is over */
 	move(starty_of_box, 0);
 	clrtoeol();
 	move(starty_of_box + 2, 0);
 	clrtoeol();
-}	
+	return;
+}

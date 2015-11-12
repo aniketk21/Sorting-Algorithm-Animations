@@ -17,7 +17,7 @@
 
 #include "sort_animation.h"
 
-void instruction(int y, int x, char *str) {
+void instruction(int y, int x, char *str) { /* for printing instructions */
 	attron(A_REVERSE | A_BOLD);	
 	mvprintw(y, x, "%s", str);
 	refresh();

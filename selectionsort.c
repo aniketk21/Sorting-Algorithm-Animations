@@ -56,23 +56,23 @@ int selectionsort(void) {
 		
 		while(random != 0) { /* this loop is required because sometimes random function generates already sorted elements */
 			random = num_generator(&ssort); /* randomly generate 'elements' numbers and store in ssort.numbers[elements] */
-			message(max_y);
+			message(max_y); /* print "generating random numbers..." */
 		}
 		clear();
 		
 		print_in_middle(stdscr, 3, 0, max_x, "SELECTION SORT", COLOR_PAIR(3));
 		
 		inner_iter = ssort.elements;
-		height_of_box = 3;
-		width_of_box = 4;
-		starty_of_box = (max_y - height_of_box) / 4 + 5;
-		startx_of_box = max_x / 4 + 2;
+		height_of_box = 3; /* height of box */
+		width_of_box = 4; /* width of box */
+		starty_of_box = (max_y - height_of_box) / 4 + 5;  /* starting y coordinate of the box */
+		startx_of_box = max_x / 4 + 2;  /* starting x coordinate of the box */
 		
 		instruction(max_y - 3, 0, "Press <ENTER> to START.");
 		instruction(max_y - 2, 0, "Press 'p' to go to the Main Menu.\n");
 		
 		curs_set(FALSE); /* curs_set(TRUE) shows a dirty cursor at top-left of the box */
-		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
+		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* create windows */
 		startx_of_box += 8;
 		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 		
@@ -164,7 +164,7 @@ int selectionsort(void) {
 				clrtoeol();
 				mvprintw(max_y - 19, max_x / 4 + 18, "Now %d and %d get swapped.", ssort.numbers[min_index], ssort.numbers[j]);
 				refresh();
-				sleep(1.5);
+				sleep(2);
 				
 				destroy_win(win3);
 				print_numbers(&ssort, max_y, max_x);

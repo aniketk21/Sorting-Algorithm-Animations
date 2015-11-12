@@ -31,8 +31,8 @@ int bubblesort(void) {
 		return errno;
 	}
 	
-	init_sort_info(&bsort);
-	win3 = NULL;
+	init_sort_info(&bsort); /* initialise sorting information */
+	win3 = NULL; /* win3 will be used for displaying the final box after each iteration */
 	cbreak();
 	
 	getmaxyx(stdscr, max_y, max_x); /* store the max coordinates of the stdscr */
@@ -53,17 +53,17 @@ int bubblesort(void) {
 		get_num_elem(&bsort); /* get the number of elements to perform sorting on */
 		clear();
 		
-		while(random != 0) {
+		while(random != 0) { /* this loop is required because sometimes random function generates already sorted elements */
 			random = num_generator(&bsort); /* randomly generate 'elements' numbers and store in bsort.numbers[elements] */
-			message(max_y); /* print "generating numbers..." */
+			message(max_y); /* print "generating random numbers..." */
 		}
 		clear();
 
 		print_in_middle(stdscr, 3, 0, max_x, "BUBBLE SORT", COLOR_PAIR(3));
 		
 		inner_iter = bsort.elements; /* inner_iter is used in second 'for' loop below as a loop control variable */
-		height_of_box = 3;
-		width_of_box = 4;
+		height_of_box = 3; /* height of box */
+		width_of_box = 4; /* width of box */
 		starty_of_box = (max_y - height_of_box) / 4 + 5; /* starting y coordinate of the box */
 		startx_of_box = max_x / 4 + 2; /* starting x coordinate of the box */
 		
@@ -72,7 +72,7 @@ int bubblesort(void) {
 		
 		curs_set(FALSE); /* curs_set(TRUE) shows a dirty cursor at top-left of the box */
 		
-		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
+		win1 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box); /* create windows */
 		startx_of_box += 8;
 		orig_x_of_box = startx_of_box;
 		win2 = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);

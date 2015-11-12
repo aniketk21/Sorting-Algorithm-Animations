@@ -20,7 +20,7 @@
 int partition(int a[], int l, int r, int max_y, int max_x, data *qcsort, WINDOW *win) {
 	int pivot, i, j, temp, choice, posx_i, posx_j, y_i, y_j;
 	
-	pivot = a[l];
+	pivot = a[l]; /* pivot is the first element of the list */
 	/* place a red box over the pivot */
 	box_over_num(l, win, max_y, max_x, 3, 4, 2); /* height of box = 3, width of box = 4 */
 	
@@ -170,7 +170,7 @@ int quicksort(void) {
 		
 		while(random != 0) { /* this loop is required because sometimes random function generates already sorted elements */
 			random = num_generator(&qcsort); /* randomly generate 'elements' numbers and store in qcsort.numbers[elements] */
-			message(max_y);
+			message(max_y); /* print "generating random numbers..." */
 		}
 		clear();
 		

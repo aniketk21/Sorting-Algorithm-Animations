@@ -19,9 +19,12 @@
 
 void box_over_num(int l, WINDOW *win, int max_y, int max_x, int height_of_box, int width_of_box, int color_pair) {
 	int starty_of_box, startx_of_box;
+	
 	starty_of_box = (max_y - height_of_box) / 4 + 5;
 	startx_of_box = max_x / 4 + 10 + 5 * l;
+	
 	win = create_newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
 	wbkgd(win, COLOR_PAIR(color_pair));
 	wrefresh(win);
+	return;
 }

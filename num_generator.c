@@ -20,6 +20,7 @@
 int num_generator(data *p) {
 	int i, max = 10, flag;
 	time_t tt;
+	
 	p->numbers = (int *)malloc(p->elements * sizeof(int));
 	if(p->numbers == NULL) {
 		perror("malloc failed");
@@ -43,4 +44,5 @@ int num_generator(data *p) {
 void message(int max_y) {
 	mvprintw(max_y / 4, 0, "Generating random numbers...");
 	refresh();
+	return;
 }

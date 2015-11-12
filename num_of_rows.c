@@ -18,12 +18,13 @@
 /* this function returns the number of rows in a file */
 #include "sort_animation.h"
 
-int num_of_rows(FILE *fp) {
-	int cnt;
+int num_of_rows(FILE *fp) { /* this function returns the number of rows in a file */
+	int count;
 	char c;
+	
 	while((c = getc(fp)) != EOF) {
 		if(c == '\n')
-			cnt++;
+			count++;
 	}
-	return cnt;
+	return count;
 }

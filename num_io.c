@@ -19,11 +19,13 @@
 
 void print_numbers(data *p, int max_y, int max_x) { /* print the numbers */
 	short int k;
+	
 	move(max_y / 4 + 5, max_x / 4 + 10);
 	printw(" ");
 	for(k = 0; k < p->elements; k++)
 		printw("%d    ", p->numbers[k]);
 	refresh();
+	return;
 }
 
 void get_num_elem(data *p) { /* this function is to get from the user the number of elements to perform sorting on */
@@ -34,9 +36,9 @@ void get_num_elem(data *p) { /* this function is to get from the user the number
 		mvprintw(1, 0, "Enter the number of elements to perform sorting on [Min: 2, Max: 10] and then press <ENTER> ");
 		scanw("%d", &p->elements);
 		refresh();
-		if((p->elements >= 2) && (p->elements <= 10))
+		if((p->elements >= 2) && (p->elements <= 10)) /* check if input is between 2 & 10 */
 			return;
-		else {
+		else { /* else repeat */
 			clear();
 			mvprintw(1, 0, "Enter a number between 2 & 10...\nPress any key to continue...");
 			refresh();
@@ -45,4 +47,5 @@ void get_num_elem(data *p) { /* this function is to get from the user the number
 	}
 	attroff(A_BOLD);
 	noecho();
+	return;
 }

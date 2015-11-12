@@ -17,12 +17,13 @@
 
 #include "sort_animation.h"
 
-void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) {
+void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) { /* print string in the middle */
 	int length, x, y;
 	float temp;
+	
 	if(win == NULL)
 		win = stdscr;
-	getyx(win, y, x);
+	getyx(win, y, x); /* get current coordinates of the window */
 	if(startx != 0)
 		x = startx;
 	if(starty != 0)
@@ -36,4 +37,5 @@ void print_in_middle(WINDOW *win, int starty, int startx, int width, char *strin
 	mvwprintw(win, y, x, "%s", string);
 	wattroff(win, color | A_BOLD);
 	refresh();
+	return;
 }

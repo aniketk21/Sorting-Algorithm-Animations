@@ -23,34 +23,38 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}	
 	char ch;
+	
 	initscr(); /* initialise curses mode */
 	raw();
 	noecho(); /* echoing of characters is turned off */
 	keypad(stdscr, TRUE);
 	if(has_colors())
 		start_color();
-	init_pair(1, COLOR_CYAN, COLOR_BLACK);
+	init_pair(1, COLOR_CYAN, COLOR_BLACK); /* initialise colour pairs */
 	init_pair(3, COLOR_GREEN, COLOR_BLACK);
 	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+	
 	ch = start();	
-	if(ch == ENTER) { /* go to next screen window */
+	if(ch == ENTER) { /* start the program */
 		clear();
 		menu(); /* print the menu and proceed */
 	}
-	else if(ch == KEY_BACKSPACE)
+	else if(ch == KEY_BACKSPACE) /* exit */
 		clear();
+	
 	refresh();
-	endwin();
-	//printf("\nThanks!\n");
+	endwin(); /* end curses mode */
+	printf("\nThanks!\n");
 	return 0;
 }
 
 char start(void) {
 	char choice;
 	int row, col;
-	init_pair(1, COLOR_CYAN, COLOR_BLACK);
-	getmaxyx(stdscr, row, col);
+	
+	getmaxyx(stdscr, row, col); /* get max dimensions of the screen */
 	print_in_middle(stdscr, row / 2, 0, col, "SORTING ALGORITHM ANIMATIONS", COLOR_PAIR(1));
+	
 	instruction(row - 2, 0, "Press <ENTER> to continue or <BACKSPACE> to exit.");
 	choice = getch();
 	return choice;

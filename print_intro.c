@@ -20,6 +20,7 @@
 void print_intro(FILE *fp, int start_y, int start_x) { /* prints the introduction page of the sorting algorithm */
 	char desc[64];
 	int y, x, cnt = 0, rows_in_file;
+	
 	y = start_y;
 	x = start_x;
 	move(y, x);
@@ -35,4 +36,5 @@ void print_intro(FILE *fp, int start_y, int start_x) { /* prints the introductio
 	}
 	refresh();
 	attroff(A_BOLD);
+	return;
 }

@@ -31,13 +31,14 @@ void menu(void) {
 	MENU *menu;
 	WINDOW *menu_window;
 
+	noecho();
 	/* Create items */
 	n_choices = ARRAY_SIZE(choices);
 	my_items = (ITEM **)calloc(n_choices, sizeof(ITEM *));
 	for(i = 0; i < n_choices; ++i)
 		my_items[i] = new_item(choices[i], ch);
 	
-	getmaxyx(stdscr, y_orig, x_orig);
+	getmaxyx(stdscr, y_orig, x_orig); /* get max dimensions of the screen */
 	y_new = ceil(0.3658 * y_orig); /* For placing the menu box at the center */
 	x_new = ceil(0.3472 * x_orig);
 	
@@ -73,6 +74,7 @@ void menu(void) {
 	wrefresh(menu_window);
 	
 	while((c = wgetch(menu_window)) != KEY_BACKSPACE) {
+		noecho();
 		switch(c) {
 			case KEY_DOWN:
 				menu_driver(menu, REQ_DOWN_ITEM);
@@ -82,25 +84,25 @@ void menu(void) {
 				break;
 			case ENTER: /* Enter */
 			{
-				current_selection = current_item(menu);
-				selected_index = item_index(current_selection);
+				current_selection = current_item(menu); /* get the current selection */
+				selected_index = item_index(current_selection); /* get the index of the current selection */
 				if(selected_index == 0) {
 					selected = 1;
-					scr_dump("screen_state");
+					scr_dump("screen_state"); /* dump current screen in screen_state */
 					clear();
 					bubblesort();
 					refresh();
 				}
 				else if(selected_index == 1) {
 					selected = 1;
-					scr_dump("screen_state");
+					scr_dump("screen_state"); /* dump current screen in screen_state */
 					clear();
 					quicksort();
 					refresh();
 				}
 				else if(selected_index == 2) {
 					selected = 1;
-					scr_dump("screen_state");
+					scr_dump("screen_state"); /* dump current screen in screen_state */
 					clear();
 					selectionsort();
 					refresh();
@@ -110,7 +112,7 @@ void menu(void) {
 		}
 		if(selected) {
 			scr_restore("screen_state");
-			doupdate();
+			doupdate(); /* immediately update the screen */
 		}
 		selected = 0;
 		wrefresh(menu_window);
@@ -121,4 +123,5 @@ void menu(void) {
 	free_menu(menu);
 	for(i = 0; i < n_choices; ++i)
 		free_item(my_items[i]);
+	return;
 }

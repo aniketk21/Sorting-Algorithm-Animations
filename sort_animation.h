@@ -80,7 +80,7 @@ int num_of_rows(FILE *fp);
 /* init_sort_info initialises the number of swaps and comparisons of a particular sorting algo to 0 */
 void init_sort_info(data *p);
 
-/* message function prints the message "generating numbers..." */
+/* message function prints the message "generating random numbers..." while the numbers are being generated */
 void message(int max_y);
 
 /* instruction function prints the instructions about how to proceed further */
