@@ -97,7 +97,7 @@ int bubblesort(void) {
 			mvprintw(max_y - 12, 0, "GREEN: Final position of element.");
 			attroff(A_BOLD);
 			
-			instruction(max_y - 3, 0, "Press <Right Arrow Key> to proceed to the next step.");
+			instruction(max_y - 3, 0, "Press <RIGHT ARROW KEY> to proceed to the next step.");
 			sleep(3);
 			attron(A_BOLD);
 			for(j = 0; swapped && j < bsort.elements - 1; j++) {

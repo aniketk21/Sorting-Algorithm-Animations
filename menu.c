@@ -66,7 +66,7 @@ void menu(void) {
 	mvwaddch(menu_window, 2, 39, ACS_RTEE);
 	wrefresh(menu_window);	
 	
-	instruction(y_orig - 3, 0, "Press ARROW keys to move and <ENTER> to select.");
+	instruction(y_orig - 3, 0, "Navigate using <ARROW> keys and press <ENTER> to select.");
 	instruction(y_orig - 2, 0, "Press <BACKSPACE> to exit.\n");
         
 	/* Post the menu */

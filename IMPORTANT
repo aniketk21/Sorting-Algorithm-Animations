@@ -1,0 +1,7 @@
+This application requires ncurses.h library for functioning.
+
+Install it using:
+	sudo apt-get install libncurses5-dev
+
+[Optional] Install ncurses.h man pages using:
+	sudo apt-get install ncurses-doc

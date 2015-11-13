@@ -96,7 +96,7 @@ int selectionsort(void) {
 			mvprintw(max_y - 10, 0, "YELLOW: Final position of element.");
 			attroff(A_BOLD);
 			
-			instruction(max_y - 3, 0, "Press <Right Arrow Key> to proceed to the next step.");
+			instruction(max_y - 3, 0, "Press <RIGHT ARROW KEY> to proceed to the next step.");
 			sleep(3);
 			attron(A_BOLD);
 			refresh();
