@@ -201,5 +201,6 @@ int selectionsort(void) {
 		getch();
 	}
 	fclose(fp1);
+	free(ssort.numbers);
 	return 0;
 }

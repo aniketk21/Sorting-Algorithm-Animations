@@ -198,5 +198,6 @@ int bubblesort(void) {
 		getch();
 	}
 	fclose(fp1);
+	free(bsort.numbers);
 	return 0;
 }

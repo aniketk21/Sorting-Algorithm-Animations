@@ -1,6 +1,2 @@
 *.o
-*.gif
 *~
-*ascii
-*ascii.c
-*border

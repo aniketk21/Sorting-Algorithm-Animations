@@ -28,3 +28,5 @@ instruction.o: instruction.c
 	cc -c -Wall instruction.c
 box_over_num.o: box_over_num.c
 	cc -c -Wall box_over_num.c
+clean:
+	rm *.o

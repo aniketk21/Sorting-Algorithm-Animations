@@ -230,5 +230,6 @@ int quicksort(void) {
 	}
 	attroff(A_BOLD);
 	fclose(fp1);
+	free(qcsort.numbers);
 	return 0;
 }
