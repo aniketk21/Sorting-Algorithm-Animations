@@ -102,7 +102,8 @@ int partition(int a[], int l, int r, int max_y, int max_x, data *qcsort, WINDOW 
 	temp = a[l]; /* swap pivot and j */
 	a[l] = a[j];
 	a[j] = temp;
-	(qcsort->swaps)++;
+	(qcsort->swaps)++; /* increment swaps */
+	
 	choice = getch();
 	if(choice == 'p') /* exit */
 		return INT_MIN;
@@ -144,9 +145,10 @@ int quicksort(void) {
 	init_pair(2, COLOR_RED, COLOR_BLACK);
 	
 	fp1 = fopen("files/quicksort.txt", "r");
-	if(fp1 == NULL) {
-		perror("open failed on file quicksort.txt");
-		return errno;
+	if(fp1 == NULL) { /* display error */
+		fprintf(stdout, "\vfopen: files/quicksort.txt :: %s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \v", strerror(errno));
+                endwin();
+                exit(0);
 	}	
 	
 	getmaxyx(stdscr, max_y, max_x); /* get the max dimensions of the screen */
@@ -161,6 +163,7 @@ int quicksort(void) {
 	if(c == 'p') {
 		clear();
 		curs_set(TRUE);
+		fclose(fp1);
 		return 0;
 	}	
 	else {
@@ -183,11 +186,13 @@ int quicksort(void) {
 		attron(A_BOLD);
 		print_numbers(&qcsort, max_y, max_x);
 		attroff(A_BOLD);
-		win1 = NULL;
+		win1 = NULL; /* win1 will be used for displaying the final box after each iteration */
 		choice = getch();
 		if(choice == 'p') {
 			clear();
 			curs_set(TRUE);
+			fclose(fp1);
+			free(qcsort.numbers);
 			return 0;
 		}	
 		else if(choice == ENTER) { /* start the animation */
@@ -200,15 +205,18 @@ int quicksort(void) {
 			instruction(max_y - 3, 0, "Press <RIGHT ARROW KEY> to proceed to the next step.");
 			sleep(3);
 			attron(A_BOLD);
+			
 			ret_val = quicksort_driver(qcsort.numbers, 0, qcsort.elements - 1, max_y, max_x, &qcsort, win1);
 			if(ret_val == INT_MIN) { /* exit */
 				clear();
 				curs_set(TRUE);
+				fclose(fp1);
+				free(qcsort.numbers);
 				return 0;
 			}	
-			starty_of_box = (max_y - height_of_box) / 4 + 5;
+			
 			sleep(1);
-
+			starty_of_box = (max_y - height_of_box) / 4 + 5;
 			move(starty_of_box - 2, 0); /* to delete the letter 'i' which remains after the animation */
 			clrtoeol();
 			move(starty_of_box - 1, 0); /* to delete the letter 'j' which remains after the animation */

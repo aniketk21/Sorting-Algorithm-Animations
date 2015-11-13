@@ -111,7 +111,7 @@ void menu(void) {
 			}
 		}
 		if(selected) {
-			scr_restore("screen_state");
+			scr_restore("screen_state"); /* restore the screen */
 			doupdate(); /* immediately update the screen */
 		}
 		selected = 0;

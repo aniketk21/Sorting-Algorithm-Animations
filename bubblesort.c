@@ -27,8 +27,9 @@ int bubblesort(void) {
 	
 	fp1 = fopen("files/bubblesort.txt", "r");
 	if(fp1 == NULL) {
-		perror("open failed on file bubblesort.txt");
-		return errno;
+		fprintf(stdout, "\vfopen: files/bubblesort.txt :: %s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \v", strerror(errno));
+                endwin();
+                exit(0);
 	}
 	
 	init_sort_info(&bsort); /* initialise sorting information */
@@ -46,6 +47,7 @@ int bubblesort(void) {
 	c = getch();
 	if(c == 'p') { /* exit */
 		clear();
+		fclose(fp1);
 		curs_set(TRUE);
 		return 0;
 	}	
@@ -85,6 +87,8 @@ int bubblesort(void) {
 		if(choice == 'p') { /* exit */
 			clear();
 			curs_set(TRUE);
+			fclose(fp1);
+			free(bsort.numbers);
 			destroy_win(win1);
 			destroy_win(win2);
 			return 0;

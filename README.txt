@@ -11,7 +11,7 @@ Description:
 3) Three sorting algorithms are available: Bubble Sort, Quicksort and Selection Sort.
 4) On the main menu screen, the user can choose any of the above mentioned algorithms.
 5) After making a selection, the user is shown a brief description and the space and time complexities of the sorting algorithm selected.
-6) On the next screen, the user is given an option to input the number of elements (numbers) to perform sorting on. The constraint is that the    user should enter a number between 2 and 10, both inclusive.
+6) On the next screen, the user is given an option to input the number of elements (numbers) to perform sorting on. The constraint is that the user should enter a number between 2 and 10, both inclusive.
 7) The numbers are then randomly generated and displayed on the screen.
 8) When the user presses <ENTER>, the animation starts. The user controls the animation using the <RIGHT ARROW KEY>.
 9) The user is shown how the sorting takes place, the current iteration number and how the numbers get swapped, compared, etc.

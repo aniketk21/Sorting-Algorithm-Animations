@@ -27,13 +27,14 @@ int selectionsort(void) {
 	data ssort;
 
 	init_sort_info(&ssort); /* initialise number of swaps and comparisons to 0 */
-	win3 = NULL;
+	win3 = NULL; /* win3 will be used for displaying the final box after each iteration */
 	cbreak();
 	
 	fp1 = fopen("files/selectionsort.txt", "r");
-	if(fp1 == NULL) {
-		perror("open failed on file selectionsort.txt");
-		return errno;
+	if(fp1 == NULL) { /* display error */
+		fprintf(stdout, "\vfopen: files/selectionsort.txt :: %s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \v", strerror(errno));
+                endwin();
+                exit(0);
 	}	
 	
 	getmaxyx(stdscr, max_y, max_x); /* get max coordinates of the screen */
@@ -47,6 +48,7 @@ int selectionsort(void) {
 	c = getch();
 	if(c == 'p') { /* exit */
 		clear();
+		fclose(fp1);
 		curs_set(TRUE);
 		return 0;
 	}	
@@ -79,10 +81,13 @@ int selectionsort(void) {
 		attron(A_BOLD);	
 		print_numbers(&ssort, max_y, max_x);
 		attroff(A_BOLD);
+		
 		choice = getch();
 		if(choice == 'p') { /* exit */
 			clear();
 			curs_set(TRUE);
+			fclose(fp1);
+			free(ssort.numbers);
 			destroy_win(win1);
 			destroy_win(win2);
 			return 0;
@@ -148,6 +153,8 @@ int selectionsort(void) {
 					if(choice == 'p') { /* exit */
 						clear();
 						curs_set(TRUE);
+						fclose(fp1);
+						free(ssort.numbers);
 						destroy_win(win1);
 						destroy_win(win2);
 						return 0;

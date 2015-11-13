@@ -23,8 +23,9 @@ int num_generator(data *p) {
 	
 	p->numbers = (int *)malloc(p->elements * sizeof(int));
 	if(p->numbers == NULL) {
-		perror("malloc failed");
-		return errno;
+		fprintf(stdout, "\vmalloc failed: %s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \v", strerror(errno));
+                endwin();
+                exit(0);
 	}	
 	srandom(time(&tt));
 	for(i = 0; i < p->elements; i++) 

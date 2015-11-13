@@ -21,6 +21,11 @@
 WINDOW *create_newwin(int height_of_box, int width_of_box, int starty_of_box, int startx_of_box) {
 	WINDOW *local_win;
 	local_win = newwin(height_of_box, width_of_box, starty_of_box, startx_of_box);
+	if(local_win == NULL) {
+		fprintf(stdout, "\vnewwin failed:  %s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \v", strerror(errno));
+		endwin();
+		exit(0);
+	}
 	box(local_win, 0, 0); /* second argument is a whitespace so that the number inside it gets displayed properly */ 
 	wrefresh(local_win);
 	return local_win;
