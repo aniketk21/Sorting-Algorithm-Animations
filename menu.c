@@ -56,7 +56,7 @@ void menu(void) {
 	/* Set menu mark to the string " > " */
 	set_menu_mark(menu, " > ");
 	
-	/* Print a border around the window and print a title for menu_window and info_win */
+	/* Print a border around the window and print a title for menu_window */
 	box(menu_window, 0, 0);
 	wattron(menu_window, A_BOLD);
 	print_in_middle(menu_window, 1, 0, 40, "Select a Sorting Algorithm", COLOR_PAIR(1));
