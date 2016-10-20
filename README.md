@@ -17,14 +17,18 @@ Animations of Bubble Sort, Quicksort and Selection Sort, written in C.
 
 ## Requirements
 
-**`ncurses.h`:**
+* **`ncurses.h`:**
 
 `$ sudo apt-get install libncurses5-dev`
 
-**[Optional] `ncurses.h` man pages:**
+* **[Optional] `ncurses.h` man pages:**
 
 `$ sudo apt-get install ncurses-doc`
 
 ## Usage
 
 `$ ./run.sh`
+
+## License
+
+**GPLv3**
