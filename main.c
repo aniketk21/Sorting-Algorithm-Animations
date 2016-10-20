@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 	
 	refresh();
 	endwin(); /* end curses mode */
-	printf("Thanks!\n");
+	printf("Bye!\n");
 	return 0;
 }
 
